@@ -57,7 +57,7 @@ def generate_message(text, recipient_id):
         except:
             return "Error"
     elif text in books:
-        index = books.index()
+        index = books.index(text)
         try:
             change_color(index+1, index+2, 2, 3, G=1)
             return "Ok"
