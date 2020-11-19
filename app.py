@@ -52,11 +52,14 @@ def generate_message(text, recipient_id):
     if text in names:
         index = names.index(text)
         try:
-            change_color(index+1, index+2, 2, 3, B=1)
+            change_color(index+1, index+2, 2, 3, G=1)
             return "Ok"
         except:
             return "Error"
     elif text in books:
+        count = books.count(text)
+        if count > 1:
+            return "يوجد اكثر من نسخه. ما هو اسم المستعير؟"
         index = books.index(text)
         try:
             change_color(index+1, index+2, 2, 3, G=1)
@@ -66,6 +69,8 @@ def generate_message(text, recipient_id):
     else:
         words = names+books
         matches = difflib.get_close_matches(text, words)
+        if matches<1:
+            return "غير موجود"
         buttons = [Button(type='postback', title=match, payload=match) for match in matches]
         res = bot.send_button_message(recipient_id, "did you mean:", buttons)
 
